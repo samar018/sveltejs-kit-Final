@@ -29,16 +29,23 @@
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+    
   };
-
   // Fetch the data when the component mounts
   fetchData();
+
+  // Function to handle the link click
+  const handleLinkClick = () => {
+    // Use Svelte's page store to navigate to the GeneInteractionPage
+    $page.goto('/GeneInteractionPage');
+  };
 </script>
 
 <main>
   <h1>Gene Interaction Data Display Page</h1>
   {#if geneInteractionData}
-    <pre>{JSON.stringify(geneInteractionData, null, 2)}</pre>
+    <!-- Add a link to navigate to the GeneInteractionPage -->
+    <a href="/GeneInteractionPage" on:click|preventDefault={handleLinkClick}>Go to Gene Interaction Page</a>
     <button on:click={handleDownload}>Download Data</button>
     <div class="progress-bar">
       <div class="progress" style="width: {downloadProgress}%"></div>
