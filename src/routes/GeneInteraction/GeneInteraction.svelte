@@ -1,35 +1,67 @@
+<!-- GeneInteraction.svelte -->
 <script>
-  export let interactionsData; // To receive the interactions data as props from the route module
+  let geneInteractionData;
+  let downloadProgress = 0;
+
+  // Function to handle the download button click
+  const handleDownload = async () => {
+    try {
+      const response = await fetch('https://vda-lab.github.io/assets/interactions.json');
+      const jsonData = await response.json();
+      const jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
+      const url = URL.createObjectURL(jsonBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'interactions.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // Function to fetch the data
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://vda-lab.github.io/assets/interactions.json');
+      geneInteractionData = await response.json();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // Fetch the data when the component mounts
+  fetchData();
 </script>
 
 <main>
-  <h1>Gene Interactions Data</h1>
-  {#if interactionsData}
-    <table>
-      <thead>
-        <tr>
-          <th>Gene ID</th>
-          <th>Interactions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each Object.entries(interactionsData) as [geneID, interactions]}
-          <tr>
-            <td>{geneID}</td>
-            <td>
-              {#each interactions as interaction}
-                <p>{interaction}</p>
-              {/each}
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+  <h1>Gene Interaction Data Display Page</h1>
+  {#if geneInteractionData}
+    <pre>{JSON.stringify(geneInteractionData, null, 2)}</pre>
+    <button on:click={handleDownload}>Download Data</button>
+    <div class="progress-bar">
+      <div class="progress" style="width: {downloadProgress}%"></div>
+    </div>
   {:else}
-    <p>Loading gene interactions data...</p>
+    <p>Loading gene interaction data...</p>
   {/if}
 </main>
 
 <style>
   /* Add styling for the component here */
+  .progress-bar {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .progress {
+    background-color: #4CAF50;
+    height: 100%;
+    transition: width 0.2s ease-in;
+  }
 </style>

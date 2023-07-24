@@ -1,10 +1,14 @@
-export const load = async ({ fetch }) => {
-  try {
-    const response = await fetch('https://vda-lab.github.io/assets/interactions.json');
-    const data = await response.json();
-    return { interactionsData: data };
-  } catch (error) {
-    console.error('Error fetching gene interactions data:', error);
-    return { interactionsData: null };
-  }
-};
+// we don't need any JS on this page, though we'll load
+// it in dev so that we get hot module replacement
+export const csr = dev;
+
+// since there's no dynamic data here, we can prerender
+// it so that it gets served as a static asset in production
+export const prerender = true;
+// we don't need any JS on this page, though we'll load
+// it in dev so that we get hot module replacement
+export const csr = dev;
+
+// since there's no dynamic data here, we can prerender
+// it so that it gets served as a static asset in production
+export const prerender = true;

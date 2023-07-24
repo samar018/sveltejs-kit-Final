@@ -1,21 +1,10 @@
-<!-- Add the necessary imports -->
+<!-- page.svelte -->
 <script>
-  import { load } from './GeneInteraction.js';
   import GeneInteraction from './GeneInteraction.svelte';
-
-  // Fetch gene interactions data using the load function
-  let interactionsData;
-  load().then((data) => {
-    interactionsData = data.interactionsData;
-  });
 </script>
 
 <main>
-  {#if interactionsData}
-    <GeneInteraction interactionsData={interactionsData} />
-  {:else}
-    <p>Loading gene interactions data...</p>
-  {/if}
+  <GeneInteraction />
 </main>
 
 <style>
