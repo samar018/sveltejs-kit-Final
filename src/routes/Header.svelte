@@ -33,10 +33,12 @@
 			<li aria-current={$page.url.pathname === '/GeneData' ? 'page' : undefined}>
 
 				<a href="/GeneData">Dataload</a>
+				
 			</li>
       <!-- New navigation item for GeneInteraction page -->
-      <li aria-current={$page.url.pathname === '/gene-interaction' ? 'page' : undefined}>
-        <a href="/gene-interaction">Gene Interaction</a>
+      <li aria-current={$page.url.pathname === '/GeneInteraction' ? 'page' : undefined}>
+
+        <a href="/GeneInteraction">Gene Interaction</a>
       </li>
 		</ul>
 
